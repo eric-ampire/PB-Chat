@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.pbreakers.pbchat.R
+import com.pbreakers.pbchat.util.QBChatConfig
 import com.pbreakers.pbchat.util.QBChatConfig.accoundKey
 import com.pbreakers.pbchat.util.QBChatConfig.applicationId
 import com.pbreakers.pbchat.util.QBChatConfig.authorizationKey
@@ -24,10 +25,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         qbChatInitialisation()
-        registerSession()
 
         val user = QBUser("ericampire", "ericampire")
-
         QBUsers.signUp(user, object : QBEntityCallback<QBUser> {
             override fun onSuccess(user: QBUser, bundle: Bundle) {
                 Toast.makeText(baseContext, "Succes", Toast.LENGTH_LONG).show()
@@ -39,20 +38,10 @@ class SplashActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerSession() {
-        QBAuth.createSession(object : QBEntityCallback<QBSession> {
-            override fun onSuccess(p0: QBSession?, p1: Bundle?) {
-                Toast.makeText(baseContext, "Succes session", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onError(error: QBResponseException) {
-                Toast.makeText(baseContext, error.message, Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-
     private fun qbChatInitialisation() {
-        QBSettings.getInstance().init(this, applicationId, authorizationKey, authorizationSecret)
-        QBSettings.getInstance().accountKey = accoundKey
+        QBSettings.getInstance().apply {
+            init(baseContext, applicationId, authorizationKey, authorizationSecret)
+            accountKey = accoundKey
+        }
     }
 }
