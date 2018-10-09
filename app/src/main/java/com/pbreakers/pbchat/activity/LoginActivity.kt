@@ -18,10 +18,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        login("ericampire", "ericampire")
+        signIn("ericampire", "ericampire")
     }
 
-    private fun login(username: String, password: String) {
+    private fun signIn(username: String, password: String) {
         QBAuth.createSession()
         val user = QBUser(username, password)
         QBUsers.signIn(user, object : QBEntityCallback<QBUser> {
