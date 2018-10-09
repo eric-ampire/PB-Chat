@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.pbreakers.pbchat.R
 import com.quickblox.auth.QBAuth
+import com.quickblox.auth.model.QBSession
 import com.quickblox.core.QBEntityCallback
 import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.QBUsers
@@ -22,10 +23,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signIn(username: String, password: String) {
-        QBAuth.createSession()
         val user = QBUser(username, password)
-        QBUsers.signIn(user, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(user: QBUser, bundle: Bundle) {
+
+        QBAuth.createSession(user, object : QBEntityCallback<QBSession> {
+            override fun onSuccess(user: QBSession, bundle: Bundle) {
                 Toast.makeText(baseContext, "Sign in", Toast.LENGTH_LONG).show()
             }
 
