@@ -24,12 +24,25 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         qbChatInitialisation()
+        registerSession()
 
         val user = QBUser("ericampire", "ericampire")
 
         QBUsers.signUp(user, object : QBEntityCallback<QBUser> {
             override fun onSuccess(user: QBUser, bundle: Bundle) {
                 Toast.makeText(baseContext, "Succes", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onError(error: QBResponseException) {
+                Toast.makeText(baseContext, error.message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun registerSession() {
+        QBAuth.createSession(object : QBEntityCallback<QBSession> {
+            override fun onSuccess(p0: QBSession?, p1: Bundle?) {
+                Toast.makeText(baseContext, "Succes session", Toast.LENGTH_LONG).show()
             }
 
             override fun onError(error: QBResponseException) {
