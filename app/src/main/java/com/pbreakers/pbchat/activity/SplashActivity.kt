@@ -30,19 +30,6 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    private fun signUp(username: String, password: String) {
-        val user = QBUser(username, password)
-        QBUsers.signUp(user, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(user: QBUser, bundle: Bundle) {
-                Toast.makeText(baseContext, "Succes", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onError(error: QBResponseException) {
-                Toast.makeText(baseContext, error.message, Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-
     private fun qbChatInitialisation() {
         QBSettings.getInstance().apply {
             init(baseContext, QBChatConfig.applicationId, QBChatConfig.authorizationKey, QBChatConfig.authorizationSecret)
