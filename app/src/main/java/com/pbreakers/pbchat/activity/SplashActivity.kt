@@ -1,5 +1,6 @@
 package com.pbreakers.pbchat.activity
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -25,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         qbChatInitialisation()
-
+        startActivity(Intent(baseContext, LoginActivity::class.java))
 
     }
 
@@ -44,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun qbChatInitialisation() {
         QBSettings.getInstance().apply {
-            init(baseContext, applicationId, authorizationKey, authorizationSecret)
+            init(baseContext, QBChatConfig.applicationId, authorizationKey, authorizationSecret)
             accountKey = accoundKey
         }
     }
