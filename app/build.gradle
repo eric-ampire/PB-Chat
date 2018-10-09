@@ -35,8 +35,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    // Facebook Sdk
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 
-
+    // Chatblox
     implementation "com.quickblox:quickblox-android-sdk-core:2.5.1@aar"
     implementation ("com.quickblox:quickblox-android-sdk-chat:2.5.1@aar") {
         transitive=true
