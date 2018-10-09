@@ -19,7 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { url "https://github.com/QuickBlox/quickblox-android-sdk-releases/raw/master/" }
     }
 }
 
