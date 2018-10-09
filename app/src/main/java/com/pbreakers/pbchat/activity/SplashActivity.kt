@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun qbChatInitialisation() {
         QBSettings.getInstance().apply {
-            init(baseContext, QBChatConfig.applicationId, authorizationKey, authorizationSecret)
+            init(baseContext, QBChatConfig.applicationId, QBChatConfig.authorizationKey, QBChatConfig.authorizationSecret)
             accountKey = accoundKey
         }
     }
