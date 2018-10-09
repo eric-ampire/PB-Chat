@@ -2,6 +2,7 @@ package com.pbreakers.pbchat.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.pbreakers.pbchat.R
 
 class LoginActivity : AppCompatActivity() {
 
