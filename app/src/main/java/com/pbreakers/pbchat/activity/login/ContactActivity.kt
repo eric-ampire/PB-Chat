@@ -1,13 +1,12 @@
-package com.pbreakers.pbchat.activity
+package com.pbreakers.pbchat.activity.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.pbreakers.pbchat.R
 
-class LoginActivity : AppCompatActivity() {
+class ContactActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_contact)
     }
 }
