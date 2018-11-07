@@ -1,8 +1,11 @@
 package com.pbreakers.pbchat.activity.messagerie
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.pbreakers.pbchat.R
 import com.sendbird.android.SendBird
 import com.sendbird.android.User
@@ -12,6 +15,11 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_contact.*
 import kotlinx.android.synthetic.main.item_contact.view.*
+import java.time.format.DateTimeFormatter
+
+fun Context.toast(message: String?) {
+    Toast.makeText(this, message.toString(), Toast.LENGTH_LONG).show()
+}
 
 class ContactActivity : AppCompatActivity() {
 
@@ -23,12 +31,21 @@ class ContactActivity : AppCompatActivity() {
         rvListContact.adapter = adapter
 
         SendBird.createUserListQuery().next { mutableList, sendBirdException ->
-            if (sendBirdException != null) return@next
+            if (sendBirdException != null) {
+                toast(sendBirdException.message)
+                return@next
+            }
+
 
             mutableList.forEach {
+                toast(it.nickname)
                 adapter.add(ContactItem(it))
                 adapter.notifyDataSetChanged()
             }
+        }
+
+        adapter.setOnItemClickListener { item, view ->
+            val user = (item as ContactItem).user
         }
     }
 
@@ -41,7 +58,8 @@ class ContactActivity : AppCompatActivity() {
                 isOnLine.text = if (user.isActive) "Online" else "Offline"
 
                 Picasso.get()
-                    .load(user.profileUrl)
+                    .load(if (user.profileUrl.isEmpty()) "indefinie" else user.profileUrl)
+                    .placeholder(R.color.gray)
                     .into(imageProfile)
             }
         }

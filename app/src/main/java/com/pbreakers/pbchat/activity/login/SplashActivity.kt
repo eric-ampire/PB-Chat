@@ -1,11 +1,13 @@
 package com.pbreakers.pbchat.activity.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.pbreakers.pbchat.R
+import com.pbreakers.pbchat.activity.messagerie.ContactActivity
 import com.pbreakers.pbchat.util.SendBirdConfig
 import com.sendbird.android.*
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -28,8 +30,7 @@ class SplashActivity : AppCompatActivity() {
                     return@connect
                 }
 
-                Toast.makeText(baseContext, "Vous est connecter ${user.nickname}", Toast.LENGTH_LONG).show()
-                Log.e("ericampire", user.nickname)
+                startActivity(Intent(this@SplashActivity, ContactActivity::class.java))
             }
         }
 
