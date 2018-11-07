@@ -8,3 +8,9 @@ object QBChatConfig {
 
     val facebookAppId = "2113616232188635"
 }
+
+object SendBirdConfig {
+    const val applicationId = "705EB71A-6D70-48D9-AD21-DA581C74547D"
+    const val apiToken = "7ba342d0838e7ea066717f0db8ffa809f363d21d"
+    const val apiUrl = "https://api.sendbird.com"
+}

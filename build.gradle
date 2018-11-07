@@ -6,6 +6,9 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url "https://raw.githubusercontent.com/smilefam/SendBird-SDK-Android/master/" }
+
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0-alpha13'

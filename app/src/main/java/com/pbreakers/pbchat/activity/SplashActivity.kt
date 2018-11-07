@@ -1,23 +1,14 @@
 package com.pbreakers.pbchat.activity
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.pbreakers.pbchat.R
-import com.pbreakers.pbchat.util.QBChatConfig
-import com.pbreakers.pbchat.util.QBChatConfig.accoundKey
-import com.pbreakers.pbchat.util.QBChatConfig.applicationId
-import com.pbreakers.pbchat.util.QBChatConfig.authorizationKey
-import com.pbreakers.pbchat.util.QBChatConfig.authorizationSecret
-import com.quickblox.auth.QBAuth
-import com.quickblox.auth.model.QBSession
-import com.quickblox.chat.QBChatService
-import com.quickblox.core.QBEntityCallback
-import com.quickblox.core.QBSettings
-import com.quickblox.core.exception.QBResponseException
-import com.quickblox.users.QBUsers
-import com.quickblox.users.model.QBUser
+import com.pbreakers.pbchat.util.SendBirdConfig
+import com.sendbird.android.SendBird
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -25,15 +16,20 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        qbChatInitialisation()
-        startActivity(Intent(baseContext, LoginActivity::class.java))
+        progressBar.visibility = View.VISIBLE
+        SendBird.init(SendBirdConfig.applicationId, this)
+        SendBird.connect("user2") { user, exception ->
+            if (exception != null) {
+                Toast.makeText(baseContext, exception.message, Toast.LENGTH_LONG).show()
+                Log.e("ericampire", exception.message)
 
-    }
+                progressBar.visibility = View.GONE
+                return@connect
+            }
 
-    private fun qbChatInitialisation() {
-        QBSettings.getInstance().apply {
-            init(baseContext, QBChatConfig.applicationId, QBChatConfig.authorizationKey, QBChatConfig.authorizationSecret)
-            accountKey = accoundKey
+            progressBar.visibility = View.GONE
+            Toast.makeText(baseContext, "Vous est connecter", Toast.LENGTH_LONG).show()
+            Log.e("ericampire", user.friendName)
         }
     }
 }
