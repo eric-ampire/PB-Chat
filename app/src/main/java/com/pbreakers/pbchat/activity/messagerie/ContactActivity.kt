@@ -55,6 +55,8 @@ class ContactActivity : AppCompatActivity() {
             detailDiscussion.putExtra("userName", user.nickname)
             detailDiscussion.putExtra("userProfile", user.profileUrl)
             detailDiscussion.putExtra("userId", user.userId)
+
+            startActivity(detailDiscussion)
         }
     }
 
