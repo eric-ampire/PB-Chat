@@ -1,7 +1,8 @@
-package com.pbreakers.pbchat.activity.login
+package com.pbreakers.pbchat.activity.messagerie
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.pbreakers.pbchat.R
 
 class ContactActivity : AppCompatActivity() {
 
