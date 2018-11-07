@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
 
             progressBar.visibility = View.GONE
             Toast.makeText(baseContext, "Vous est connecter", Toast.LENGTH_LONG).show()
-            Log.e("ericampire", user.friendName)
+            Log.e("ericampire", user.nickname)
         }
     }
 }
