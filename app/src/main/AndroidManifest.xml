@@ -13,9 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.login.ContactActivity"></activity>
+
+        <!---->
+        <activity android:name=".activity.messagerie.ContactActivity"></activity>
+
+        <!---->
         <activity android:name=".activity.login.SignUpActivity"></activity>
+
+        <!---->
         <activity android:name=".activity.login.LoginActivity" />
+
+        <!---->
         <activity android:name=".activity.login.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
