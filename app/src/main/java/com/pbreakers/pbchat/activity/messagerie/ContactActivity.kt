@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.pbreakers.pbchat.R
+import android.content.Intent
 import com.sendbird.android.SendBird
 import com.sendbird.android.User
 import com.squareup.picasso.Picasso
@@ -39,6 +40,9 @@ class ContactActivity : AppCompatActivity() {
 
             mutableList.forEach {
                 toast(it.nickname)
+
+                if (it.userId == SendBird.getCurrentUser().userId) return@forEach
+
                 adapter.add(ContactItem(it))
                 adapter.notifyDataSetChanged()
             }
@@ -46,6 +50,11 @@ class ContactActivity : AppCompatActivity() {
 
         adapter.setOnItemClickListener { item, view ->
             val user = (item as ContactItem).user
+            val detailDiscussion = Intent(baseContext, DetailDiscussionActivity::class.java)
+
+            detailDiscussion.putExtra("userName", user.nickname)
+            detailDiscussion.putExtra("userProfile", user.profileUrl)
+            detailDiscussion.putExtra("userId", user.userId)
         }
     }
 
