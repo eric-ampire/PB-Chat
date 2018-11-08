@@ -11,11 +11,11 @@
         android:id="@+id/rvListDiscussion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/discussionButton"
+        android:layout_above="@id/contactButton"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <Button
-        android:id="@+id/discussionButton"
+        android:id="@+id/contactButton"
         android:layout_alignParentBottom="true"
         android:text="Contact"
         android:layout_width="match_parent"

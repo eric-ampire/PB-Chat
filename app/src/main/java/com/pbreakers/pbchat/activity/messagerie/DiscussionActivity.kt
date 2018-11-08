@@ -1,5 +1,6 @@
 package com.pbreakers.pbchat.activity.messagerie
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.pbreakers.pbchat.R
@@ -29,6 +30,10 @@ class DiscussionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discussion)
         supportActionBar?.title = "Discussion 😃"
+
+        contactButton.setOnClickListener {
+            startActivity(Intent(baseContext, ContactActivity::class.java))
+        }
 
         val adapter = GroupAdapter<ViewHolder>()
         rvListDiscussion.adapter = adapter
