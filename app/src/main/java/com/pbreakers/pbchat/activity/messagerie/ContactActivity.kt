@@ -28,6 +28,8 @@ class ContactActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact)
 
+        supportActionBar?.title = "Contact"
+
         val adapter = GroupAdapter<ViewHolder>()
         rvListContact.adapter = adapter
 
@@ -66,7 +68,7 @@ class ContactActivity : AppCompatActivity() {
         override fun bind(viewHolder: ViewHolder, position: Int) {
             with(viewHolder.itemView) {
                 userName.text = user.nickname
-                isOnLine.text = if (user.isActive) "Online" else "Offline"
+                isOnLine.text = if (user.connectionStatus == User.ConnectionStatus.ONLINE) "Online" else "Offline"
 
                 Picasso.get()
                     .load(if (user.profileUrl.isEmpty()) "indefinie" else user.profileUrl)
