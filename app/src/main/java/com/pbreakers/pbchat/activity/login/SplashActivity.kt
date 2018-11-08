@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import com.pbreakers.pbchat.R
 import com.pbreakers.pbchat.activity.messagerie.ContactActivity
+import com.pbreakers.pbchat.activity.messagerie.DiscussionActivity
 import com.pbreakers.pbchat.util.SendBirdConfig
 import com.sendbird.android.*
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -30,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
                     return@connect
                 }
 
-                startActivity(Intent(this@SplashActivity, ContactActivity::class.java))
+                startActivity(Intent(this@SplashActivity, DiscussionActivity::class.java))
             }
         }
 
@@ -38,9 +39,6 @@ class SplashActivity : AppCompatActivity() {
             SendBird.disconnect {
                 Toast.makeText(baseContext, "Vous est deconnecter", Toast.LENGTH_LONG).show()
             }
-
         }
-
-
     }
 }
