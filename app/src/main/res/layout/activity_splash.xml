@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.login.SplashActivity">
 
+    <EditText
+        android:id="@+id/userName"
+        android:hint="Username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <Button
         android:id="@+id/connect"
@@ -19,4 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Deconnexion" />
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
