@@ -6,19 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity.messagerie.DiscussionActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_alignParentTop="true"
-        android:id="@+id/rvListDiscussion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/contactButton"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-    <Button
-        android:id="@+id/contactButton"
-        android:layout_alignParentBottom="true"
-        android:text="Contact"
+    <com.stfalcon.chatkit.dialogs.DialogsList
+        android:id="@+id/dialogList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </RelativeLayout>
