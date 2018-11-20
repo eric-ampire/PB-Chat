@@ -24,7 +24,7 @@
             android:label="PB | Contact"
             android:name=".activity.messagerie.ContactActivity" /> <!--  -->
         <activity
-            android:label="Connexion"
+            android:label="PB | Connexion"
             android:name=".activity.login.LoginActivity" />
         <!--  -->
         <activity
