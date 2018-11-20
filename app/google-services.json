@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "879476182129",
+    "firebase_url": "https://pbchat-99410.firebaseio.com",
+    "project_id": "pbchat-99410",
+    "storage_bucket": "pbchat-99410.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879476182129:android:811a49b79181a386",
+        "android_client_info": {
+          "package_name": "com.pbreakers.pbchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "879476182129-u7nk1rt92v7uafp1lc2del65fmmdhh33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNCFGXHdiCjVGwdMBj3brX79ij_vuen3I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
