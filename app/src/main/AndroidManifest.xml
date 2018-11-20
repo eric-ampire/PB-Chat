@@ -7,22 +7,33 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".application.PBChatApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.messagerie.DiscussionActivity"></activity>
-        <activity android:name=".activity.messagerie.DetailDiscussionActivity" /> <!--  -->
-        <activity android:name=".activity.messagerie.ContactActivity" /> <!--  -->
-        <activity android:name=".activity.login.SignUpActivity" /> <!--  -->
-        <activity android:name=".activity.login.LoginActivity" /> <!--  -->
-        <activity android:name=".activity.login.SplashActivity">
+        <activity
+            android:label="PB | Conversation"
+            android:name=".activity.messagerie.DiscussionActivity" />
+        <activity
+            android:parentActivityName=".activity.messagerie.DiscussionActivity"
+            android:name=".activity.messagerie.DetailDiscussionActivity" /> <!--  -->
+        <activity
+            android:parentActivityName=".activity.messagerie.DiscussionActivity"
+            android:label="PB | Contact"
+            android:name=".activity.messagerie.ContactActivity" /> <!--  -->
+        <activity
+            android:label="Connexion"
+            android:name=".activity.login.LoginActivity" />
+        <!--  -->
+        <activity
+            android:launchMode="singleTop"
+            android:theme="@style/SplashTheme"
+            android:name=".activity.login.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
