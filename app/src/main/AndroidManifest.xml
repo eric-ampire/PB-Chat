@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pbreakers.pbchat">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.PBChatApplication"
         android:allowBackup="true"
