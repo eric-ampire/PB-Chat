@@ -6,8 +6,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.pbreakers.pbchat.R
-import com.pbreakers.pbchat.fragment.LoginFragment
-import com.pbreakers.pbchat.fragment.RegistrationFragment
+import com.pbreakers.pbchat.fragment.login.LoginFragment
+import com.pbreakers.pbchat.fragment.login.RegistrationFragment
 import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
