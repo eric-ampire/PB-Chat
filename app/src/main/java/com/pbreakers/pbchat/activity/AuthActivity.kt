@@ -15,11 +15,11 @@ class AuthActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_login -> {
-                replaceFragment(supportFragmentManager, LoginFragment())
+                replaceFragment(supportFragmentManager, LoginFragment(), R.id.frameLogin)
                 true
             }
             R.id.navigation_create_account -> {
-                replaceFragment(supportFragmentManager, RegistrationFragment())
+                replaceFragment(supportFragmentManager, RegistrationFragment(), R.id.frameLogin)
                 true
             }
             else -> {
@@ -33,14 +33,14 @@ class AuthActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_auth)
 
         navigation.setOnNavigationItemSelectedListener(this)
-        replaceFragment(supportFragmentManager, LoginFragment())
+        replaceFragment(supportFragmentManager, LoginFragment(), R.id.frameLogin)
     }
 
     companion object {
-        fun replaceFragment(fragmentManager: FragmentManager, fragment: Fragment) {
+        fun replaceFragment(fragmentManager: FragmentManager, fragment: Fragment, layout: Int) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .commit()
+                .replace(layout, fragment)
+                .commit()
         }
     }
 }

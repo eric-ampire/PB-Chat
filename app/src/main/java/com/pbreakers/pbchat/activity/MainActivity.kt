@@ -14,17 +14,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.navigation_dialog -> {
-                AuthActivity.replaceFragment(supportFragmentManager, DiscussionFragment())
+                AuthActivity.replaceFragment(supportFragmentManager, DiscussionFragment(), R.id.homeFrame)
                 true
             }
 
             R.id.navigation_profile -> {
-                AuthActivity.replaceFragment(supportFragmentManager, ProfileFragment())
+                AuthActivity.replaceFragment(supportFragmentManager, ProfileFragment(), R.id.homeFrame)
                 true
             }
 
             R.id.navigation_contact -> {
-                AuthActivity.replaceFragment(supportFragmentManager, ContactFragment())
+                AuthActivity.replaceFragment(supportFragmentManager, ContactFragment(), R.id.homeFrame)
                 true
             }
 
@@ -39,6 +39,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_main)
 
         homeNavigation.setOnNavigationItemSelectedListener(this)
-        AuthActivity.replaceFragment(supportFragmentManager, DiscussionFragment())
+        AuthActivity.replaceFragment(supportFragmentManager, DiscussionFragment(), R.id.homeFrame)
     }
 }
