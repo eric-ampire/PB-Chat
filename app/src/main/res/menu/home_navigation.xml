@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_dialog"
-        android:icon="@drawable/ic_phonelink_lock_black_24dp"
+        android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="Discussion" />
 
     <item
         android:id="@+id/navigation_contact"
-        android:icon="@drawable/ic_person_add_black_24dp"
+        android:icon="@drawable/ic_group_black_24dp"
         android:title="Contact" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_add_black_24dp"
+        android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="Profile" />
 
 </menu>
