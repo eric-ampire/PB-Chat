@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.pbreakers.pbchat.R
+import com.quickblox.auth.session.QBSessionManager
 
 class SplashActivity : AppCompatActivity() {
 
@@ -11,7 +12,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        startActivity(Intent(baseContext, AuthActivity::class.java))
-        finish()
+        if (QBSessionManager.getInstance().sessionParameters == null) {
+            startActivity(Intent(baseContext, AuthActivity::class.java))
+            finish()
+        } else {
+            startActivity(Intent(baseContext, MainActivity::class.java))
+            finish()
+        }
     }
 }
