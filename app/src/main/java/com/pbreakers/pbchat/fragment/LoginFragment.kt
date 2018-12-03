@@ -1,9 +1,10 @@
-package com.pbreakers.pbchat
+package com.pbreakers.pbchat.fragment
 
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import com.pbreakers.pbchat.R
 
 
 class LoginFragment : Fragment() {
