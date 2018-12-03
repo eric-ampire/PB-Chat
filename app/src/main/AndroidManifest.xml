@@ -14,12 +14,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.AuthActivity"
-            android:label="@string/title_activity_auth"></activity>
-        <activity android:name=".activity.SplashActivity">
+            android:label="@string/title_activity_auth">
+
+        </activity>
+        <activity
+            android:theme="@style/AppTheme.Splash"
+            android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
