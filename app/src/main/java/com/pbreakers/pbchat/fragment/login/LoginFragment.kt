@@ -6,7 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.pbreakers.pbchat.R
 import com.pbreakers.pbchat.activity.MainActivity
 import com.quickblox.auth.QBAuth
@@ -52,6 +55,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    @MainThread
     private fun tryToSignIn() {
         val username = edLogin.text.toString()
         val password = edPassword.text.toString()
@@ -62,28 +66,18 @@ class LoginFragment : Fragment() {
         }
 
         dialog.show()
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val task = firebaseAuth.signInWithEmailAndPassword(username, password)
 
-        val currentUser = QBUser(username, password)
-        QBAuth.createSession(currentUser).performAsync(object : QBEntityCallback<QBSession> {
-            override fun onSuccess(session: QBSession, bundle: Bundle) {
+        task.addOnFailureListener {
+            Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+            dialog.show()
+        }
 
-                QBChatService.getInstance().login(currentUser, object : QBEntityCallback<Any> {
-                    override fun onSuccess(p0: Any?, p1: Bundle?) {
-                        startActivity(Intent(activity, MainActivity::class.java))
-                        activity?.finish()
-                    }
-
-                    override fun onError(error: QBResponseException) {
-                        dialog.dismiss()
-                        Toast.makeText(activity, error.message, Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
-
-            override fun onError(error: QBResponseException) {
-                dialog.dismiss()
-                Toast.makeText(activity, error.message, Toast.LENGTH_LONG).show()
-            }
-        })
+        task.addOnSuccessListener {
+            dialog.show()
+            startActivity(Intent(activity, MainActivity::class.java))
+            activity?.finish()
+        }
     }
 }
