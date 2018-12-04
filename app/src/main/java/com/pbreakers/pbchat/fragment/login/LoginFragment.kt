@@ -2,13 +2,16 @@ package com.pbreakers.pbchat.fragment.login
 
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.pbreakers.pbchat.R
+import com.pbreakers.pbchat.activity.MainActivity
 import com.quickblox.auth.QBAuth
 import com.quickblox.auth.session.QBSession
+import com.quickblox.chat.QBChatService
 import com.quickblox.core.QBEntityCallback
 import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.model.QBUser
@@ -60,11 +63,21 @@ class LoginFragment : Fragment() {
 
         dialog.show()
 
-        QBAuth.createSession(QBUser(username, password)).performAsync(object : QBEntityCallback<QBSession> {
+        val currentUser = QBUser(username, password)
+        QBAuth.createSession(currentUser).performAsync(object : QBEntityCallback<QBSession> {
             override fun onSuccess(session: QBSession, bundle: Bundle) {
-                dialog.dismiss()
-                //startActivity(Intent(activity, MainActivity::class.java))
-                activity?.finish()
+
+                QBChatService.getInstance().login(currentUser, object : QBEntityCallback<Any> {
+                    override fun onSuccess(p0: Any?, p1: Bundle?) {
+                        startActivity(Intent(activity, MainActivity::class.java))
+                        activity?.finish()
+                    }
+
+                    override fun onError(error: QBResponseException) {
+                        dialog.dismiss()
+                        Toast.makeText(activity, error.message, Toast.LENGTH_LONG).show()
+                    }
+                })
             }
 
             override fun onError(error: QBResponseException) {
