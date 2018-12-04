@@ -1,6 +1,7 @@
 package com.pbreakers.pbchat.application
 
 import android.app.Application
+import androidx.multidex.MultiDex
 import com.quickblox.auth.session.QBSettings
 import com.quickblox.chat.QBChatService
 import com.quickblox.core.QBHttpConnectionConfig
@@ -17,6 +18,7 @@ class PBChatApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MultiDex.install(applicationContext)
 
 
         QBSettings.getInstance().storingMehanism = StoringMechanism.UNSECURED
