@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.google.android.material.snackbar.Snackbar
 
 import com.pbreakers.pbchat.R
+import com.pbreakers.pbchat.activity.DetailDialogActivity
 import com.quickblox.chat.QBRestChatService
 import com.quickblox.chat.model.QBChatDialog
 import com.quickblox.core.QBEntityCallback
@@ -22,6 +23,7 @@ import com.quickblox.core.exception.QBResponseException
 import com.quickblox.core.request.QBRequestBuilder
 import com.quickblox.core.request.QBRequestGetBuilder
 import com.squareup.picasso.Picasso
+import android.content.Intent
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.commons.models.IDialog
 import com.stfalcon.chatkit.commons.models.IMessage
@@ -35,6 +37,10 @@ import java.util.*
 
 
 class DiscussionFragment : Fragment() {
+
+    companion object {
+        const val EXTRA_ID_DIALOG = "ID_DIALOG"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -54,6 +60,13 @@ class DiscussionFragment : Fragment() {
         }
 
         val adapter = GroupAdapter<ViewHolder>()
+        adapter.setOnItemClickListener { item, view ->
+            val dialogId = (item as DialogItem).qbDialog.dialogId
+            Intent(activity, DetailDialogActivity::class.java).apply {
+                putExtra(EXTRA_ID_DIALOG, dialogId)
+                startActivity(this)
+            }
+        }
 
         // On lance le loading
         dialogRefreshing.isRefreshing = true

@@ -31,10 +31,7 @@ class ContactFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        contactRefreshing.isRefreshing = true
-        contactRefreshing.setOnRefreshListener {
-            getAllContact()
-        }
+        contactRefreshing.setOnRefreshListener { getAllContact() }
     }
 
     private fun getAllContact() {
