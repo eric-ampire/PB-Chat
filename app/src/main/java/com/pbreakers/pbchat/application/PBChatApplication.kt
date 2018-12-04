@@ -18,6 +18,7 @@ class PBChatApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+
         QBSettings.getInstance().storingMehanism = StoringMechanism.UNSECURED
         QBSettings.getInstance().init(applicationContext, APP_ID, AUTHORIZATION_KEY, AUTHORIZATION_SECRET)
         QBSettings.getInstance().accountKey = ACCOUNT_KEY
