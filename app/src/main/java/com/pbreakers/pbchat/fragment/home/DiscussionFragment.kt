@@ -55,7 +55,25 @@ class DiscussionFragment : Fragment() {
             limit = 100
         }
 
-        QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(this)
+        val adapter = GroupAdapter<ViewHolder>()
+
+        val perform = QBRestChatService.getChatDialogs(null, requestBuilder)
+        perform.performAsync(object : QBEntityCallback<ArrayList<QBChatDialog>> {
+            override fun onSuccess(dialogs: ArrayList<QBChatDialog>, bundle: Bundle) {
+
+                dialogs.asSequence().forEach {
+                    adapter.add(DialogItem(it))
+                }
+
+                view.dialogsList.adapter = adapter
+                dialogRefreshing.isRefreshing = false
+            }
+
+            override fun onError(error: QBResponseException?) {
+                dialogRefreshing.isRefreshing = false
+                Snackbar.make(view, error?.message.toString(), Snackbar.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
