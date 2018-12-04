@@ -7,7 +7,7 @@
     tools:context=".fragment.home.DiscussionFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshing"
+        android:id="@+id/dialogRefreshing"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
