@@ -44,10 +44,8 @@ class DiscussionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dialogRefreshing.isRefreshing = true
-        dialogRefreshing.setOnRefreshListener {
-            getAllDialogs(view)
-        }
+        dialogRefreshing.setOnRefreshListener { getAllDialogs(view) }
+        getAllDialogs(view)
     }
 
     private fun getAllDialogs(view: View) {
@@ -56,6 +54,9 @@ class DiscussionFragment : Fragment() {
         }
 
         val adapter = GroupAdapter<ViewHolder>()
+
+        // On lance le loading
+        dialogRefreshing.isRefreshing = true
 
         val perform = QBRestChatService.getChatDialogs(null, requestBuilder)
         perform.performAsync(object : QBEntityCallback<ArrayList<QBChatDialog>> {
