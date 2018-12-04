@@ -6,8 +6,10 @@ import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 import com.pbreakers.pbchat.R
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileFragment : Fragment() {
@@ -21,6 +23,10 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        userNameProfile.text = currentUser?.displayName
+        userEmailProfile.text = currentUser?.email
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +64,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun tryToLogout() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        FirebaseAuth.getInstance().signOut()
+        activity?.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
