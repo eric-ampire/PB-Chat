@@ -2,12 +2,16 @@ package com.pbreakers.pbchat.fragment.login
 
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 
 import com.pbreakers.pbchat.R
+import com.pbreakers.pbchat.activity.MainActivity
 import com.quickblox.core.QBEntityCallback
 import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.QBUsers
@@ -59,22 +63,29 @@ class RegistrationFragment : Fragment() {
         }
 
         dialog.show()
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val task = firebaseAuth.createUserWithEmailAndPassword(username, password)
 
-        val user = QBUser(username, password).apply {
-            this.fullName = fullName
+        task.addOnFailureListener {
+            Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+            dialog.dismiss()
         }
 
-        QBUsers.signUp(user).performAsync(object : QBEntityCallback<QBUser> {
-            override fun onSuccess(user: QBUser, bundle: Bundle) {
-                dialog.dismiss()
-                Toast.makeText(activity, "Votre compte a etait crée avec succes !", Toast.LENGTH_LONG).show()
+        task.addOnSuccessListener {
+            val profileChangeBuilder = UserProfileChangeRequest.Builder().setDisplayName(fullName).build()
+            val currentUser = firebaseAuth.currentUser
 
+            val profileUpdaterTask = currentUser?.updateProfile(profileChangeBuilder)!!
+            profileUpdaterTask.addOnSuccessListener {
+                dialog.dismiss()
+                startActivity(Intent(activity, MainActivity::class.java))
+                activity?.finish()
             }
 
-            override fun onError(error: QBResponseException) {
+            profileUpdaterTask.addOnFailureListener {
                 dialog.dismiss()
-                Toast.makeText(activity, error.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
             }
-        })
+        }
     }
 }
