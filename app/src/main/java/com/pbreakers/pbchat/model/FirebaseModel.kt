@@ -1,9 +1,10 @@
 package com.pbreakers.pbchat.model
 
+import android.provider.ContactsContract
 import android.text.BoringLayout
 import com.quickblox.chat.query.QueryGetCountMessage
 
-data class FirebaseUser(
+data class FirebaseChatUser(
     var uid: String = "",
     var displayName: String = "",
     var profile: String = ""
@@ -18,6 +19,7 @@ data class FirebaseMessage(
 )
 
 data class FirebaseDialog(
+    var photo: String = "",
     var uid: String = "",
     var name: String = "",
     var bodyLastMessage: String = "",
