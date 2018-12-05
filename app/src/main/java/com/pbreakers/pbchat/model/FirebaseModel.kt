@@ -7,7 +7,7 @@ import com.quickblox.chat.query.QueryGetCountMessage
 data class FirebaseChatUser(
     var uid: String = "",
     var displayName: String = "",
-    var profile: String = ""
+    var profile: String? = null
 )
 
 data class FirebaseMessage(
@@ -19,7 +19,7 @@ data class FirebaseMessage(
 )
 
 data class FirebaseDialog(
-    var photo: String = "",
+    var photo: String? = null,
     var uid: String = "",
     var name: String = "",
     var bodyLastMessage: String = "",
