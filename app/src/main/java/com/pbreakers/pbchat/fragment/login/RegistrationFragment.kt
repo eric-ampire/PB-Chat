@@ -83,9 +83,9 @@ class RegistrationFragment : Fragment() {
                 saveUserData(dialog)
             }
 
-            profileUpdaterTask.addOnFailureListener {
+            profileUpdaterTask.addOnFailureListener { error ->
                 dialog.dismiss()
-                Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, error.message, Toast.LENGTH_LONG).show()
             }
         }
     }

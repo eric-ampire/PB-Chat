@@ -62,6 +62,8 @@ class DiscussionFragment : Fragment() {
     }
 
     private fun getMyDialog() {
+
+        dialogsList.adapter = dialogAdapter
         dialogRefreshing.isRefreshing = true
 
         val database = FirebaseFirestore.getInstance()
@@ -72,6 +74,7 @@ class DiscussionFragment : Fragment() {
                 return@addSnapshotListener
             }
 
+            dialogAdapter.clear()
             querySnapshot.asSequence().forEach {
                 val dialog = it.toObject(FirebaseDialog::class.java)
                 dialogAdapter.add(DialogItem(dialog))

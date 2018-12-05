@@ -47,6 +47,7 @@ class ContactFragment : Fragment() {
 
     private fun getAllContact() {
 
+        contactList.adapter = contactAdapter
         contactRefreshing.isRefreshing = true
 
         val database = FirebaseFirestore.getInstance()
@@ -57,6 +58,7 @@ class ContactFragment : Fragment() {
                 return@addSnapshotListener
             }
 
+            contactAdapter.clear()
             querySnapshot.asSequence().forEach {
                 val user = it.toObject(FirebaseChatUser::class.java)
                 contactAdapter.add(UserItem(user))
