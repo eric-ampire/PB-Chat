@@ -95,14 +95,17 @@ class DiscussionFragment : Fragment() {
         override fun bind(viewHolder: ViewHolder, position: Int) {
             val dateFormat = DateFormat.getDateInstance().format(Date(dialog.dateLastMessage))
             val textFormat = dateFormat.format("H:mm")
+            val unReadMessage = dialog.messages.count { !it.isRedden }
 
             with(viewHolder.itemView) {
                 findViewById<TextView>(R.id.dialogName).text = dialog.name
                 findViewById<TextView>(R.id.dialogDate).text = textFormat
                 findViewById<TextView>(R.id.dialogLastMessage).text = dialog.bodyLastMessage
+                findViewById<TextView>(R.id.dialogUnreadBubble).text = "$unReadMessage"
+
 
                 val avatar = findViewById<ImageView>(R.id.dialogAvatar)
-                Picasso.get().load(dialog.photo).error(R.drawable.logo).into(avatar)
+                Picasso.get().load(dialog.photo).error(R.drawable.bg_user_placeholder).into(avatar)
             }
         }
     }
