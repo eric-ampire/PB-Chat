@@ -105,7 +105,7 @@ class DiscussionFragment : Fragment() {
 
 
                 val avatar = findViewById<ImageView>(R.id.dialogAvatar)
-                Picasso.get().load(dialog.photo).error(R.drawable.bg_user_placeholder).into(avatar)
+                Picasso.get().load(dialog.photo ?: "empty").error(R.drawable.bg_user_placeholder).into(avatar)
             }
         }
     }
