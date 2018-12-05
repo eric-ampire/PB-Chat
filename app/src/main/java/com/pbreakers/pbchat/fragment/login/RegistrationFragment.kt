@@ -9,9 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 
 import com.pbreakers.pbchat.R
 import com.pbreakers.pbchat.activity.MainActivity
+import com.pbreakers.pbchat.model.FirebaseChatUser
 import com.quickblox.core.QBEntityCallback
 import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.QBUsers
@@ -77,15 +79,34 @@ class RegistrationFragment : Fragment() {
 
             val profileUpdaterTask = currentUser?.updateProfile(profileChangeBuilder)!!
             profileUpdaterTask.addOnSuccessListener {
-                dialog.dismiss()
-                startActivity(Intent(activity, MainActivity::class.java))
-                activity?.finish()
+
+                saveUserData(dialog)
             }
 
             profileUpdaterTask.addOnFailureListener {
                 dialog.dismiss()
                 Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    private fun saveUserData(dialog: ProgressDialog) {
+        val userCollection = FirebaseFirestore.getInstance().collection("users")
+        val currentUser = FirebaseAuth.getInstance().currentUser!!
+
+        val user = FirebaseChatUser(
+            uid = currentUser.uid,
+            displayName = currentUser.displayName ?: "Undefined"
+        )
+
+        userCollection.document(user.uid).set(user).addOnSuccessListener {
+            dialog.dismiss()
+            startActivity(Intent(activity, MainActivity::class.java))
+            activity?.finish()
+
+        }.addOnFailureListener {
+            dialog.dismiss()
+            Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
         }
     }
 }
