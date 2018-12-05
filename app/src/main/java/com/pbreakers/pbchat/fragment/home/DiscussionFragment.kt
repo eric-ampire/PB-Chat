@@ -66,13 +66,13 @@ class DiscussionFragment : Fragment() {
 
         val database = FirebaseFirestore.getInstance()
         val dialogCollection = database.collection("dialogs")
-        dialogCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            if (firebaseFirestoreException != null && querySnapshot == null) {
+        dialogCollection.addSnapshotListener { querySnapshot, exception ->
+            if (exception != null || querySnapshot == null) {
                 dialogRefreshing.isRefreshing = false
                 return@addSnapshotListener
             }
 
-            querySnapshot!!.asSequence().forEach {
+            querySnapshot.asSequence().forEach {
                 val dialog = it.toObject(FirebaseDialog::class.java)
                 dialogAdapter.add(DialogItem(dialog))
             }
