@@ -44,7 +44,7 @@ class DiscussionFragment : Fragment() {
     private val dialogAdapter = GroupAdapter<ViewHolder>()
 
     companion object {
-        const val EXTRA_ID_DIALOG = "ID_DIALOG"
+        const val EXTRA_USER_ID = "id_message"
     }
 
 
@@ -59,6 +59,16 @@ class DiscussionFragment : Fragment() {
 
         dialogRefreshing.setOnRefreshListener { getMyDialog() }
         getMyDialog()
+
+        dialogAdapter.setOnItemClickListener { item, view ->
+
+            val contactItem = item as ContactFragment.UserItem
+
+            Intent(activity, DetailDialogActivity::class.java).apply {
+                putExtra(EXTRA_USER_ID, contactItem.user.uid)
+                startActivity(this)
+            }
+        }
     }
 
     private fun getMyDialog() {

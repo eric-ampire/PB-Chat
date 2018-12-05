@@ -1,6 +1,7 @@
 package com.pbreakers.pbchat.fragment.home
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 import com.pbreakers.pbchat.R
+import com.pbreakers.pbchat.activity.AuthActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
@@ -65,6 +67,7 @@ class ProfileFragment : Fragment() {
 
     private fun tryToLogout() {
         FirebaseAuth.getInstance().signOut()
+        startActivity(Intent(activity, AuthActivity::class.java))
         activity?.finish()
     }
 
