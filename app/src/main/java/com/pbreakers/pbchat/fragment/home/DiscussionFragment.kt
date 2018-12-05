@@ -24,6 +24,8 @@ import com.quickblox.core.request.QBRequestBuilder
 import com.quickblox.core.request.QBRequestGetBuilder
 import com.squareup.picasso.Picasso
 import android.content.Intent
+import com.google.firebase.firestore.FirebaseFirestore
+import com.pbreakers.pbchat.model.FirebaseDialog
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.commons.models.IDialog
 import com.stfalcon.chatkit.commons.models.IMessage
@@ -33,14 +35,19 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_discussion.*
 import kotlinx.android.synthetic.main.fragment_discussion.view.*
+import java.text.DateFormat
 import java.util.*
 
 
 class DiscussionFragment : Fragment() {
 
+    private val dialogAdapter = GroupAdapter<ViewHolder>()
+
     companion object {
         const val EXTRA_ID_DIALOG = "ID_DIALOG"
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,45 +57,30 @@ class DiscussionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dialogRefreshing.setOnRefreshListener { getAllDialogs(view) }
-        getAllDialogs(view)
+        dialogRefreshing.setOnRefreshListener { getMyDialog() }
+        getMyDialog()
     }
 
-    private fun getAllDialogs(view: View) {
-        val requestBuilder = QBRequestGetBuilder().apply {
-            limit = 100
-        }
-
-        val adapter = GroupAdapter<ViewHolder>()
-        adapter.setOnItemClickListener { item, view ->
-            val dialogId = (item as DialogItem).qbDialog.dialogId
-            Intent(activity, DetailDialogActivity::class.java).apply {
-                putExtra(EXTRA_ID_DIALOG, dialogId)
-                startActivity(this)
-            }
-        }
-
-        // On lance le loading
+    private fun getMyDialog() {
         dialogRefreshing.isRefreshing = true
 
-        val perform = QBRestChatService.getChatDialogs(null, requestBuilder)
-        perform.performAsync(object : QBEntityCallback<ArrayList<QBChatDialog>> {
-            override fun onSuccess(dialogs: ArrayList<QBChatDialog>, bundle: Bundle) {
-
-                dialogs.asSequence().forEach {
-                    adapter.add(DialogItem(it))
-                }
-
-                view.dialogsList.adapter = adapter
+        val database = FirebaseFirestore.getInstance()
+        val dialogCollection = database.collection("dialogs")
+        dialogCollection.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            if (firebaseFirestoreException != null && querySnapshot == null) {
                 dialogRefreshing.isRefreshing = false
+                return@addSnapshotListener
             }
 
-            override fun onError(error: QBResponseException?) {
-                dialogRefreshing.isRefreshing = false
-                Snackbar.make(view, error?.message.toString(), Snackbar.LENGTH_SHORT).show()
+            querySnapshot!!.asSequence().forEach {
+                val dialog = it.toObject(FirebaseDialog::class.java)
+                dialogAdapter.add(DialogItem(dialog))
             }
-        })
+
+            dialogRefreshing.isRefreshing = false
+        }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,16 +89,20 @@ class DiscussionFragment : Fragment() {
         appCompatActivity.supportActionBar?.title = "Discussion"
     }
 
-    class DialogItem(val qbDialog: QBChatDialog) : Item<ViewHolder>() {
+    class DialogItem(val dialog: FirebaseDialog) : Item<ViewHolder>() {
         override fun getLayout(): Int = R.layout.item_dialog
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
+            val dateFormat = DateFormat.getDateInstance().format(Date(dialog.dateLastMessage))
+            val textFormat = dateFormat.format("H:mm")
+
             with(viewHolder.itemView) {
-                findViewById<TextView>(R.id.dialogName).text = qbDialog.name
-                findViewById<TextView>(R.id.dialogDate).text = "Date"
-                findViewById<TextView>(R.id.dialogLastMessage).text = qbDialog.lastMessage
+                findViewById<TextView>(R.id.dialogName).text = dialog.name
+                findViewById<TextView>(R.id.dialogDate).text = textFormat
+                findViewById<TextView>(R.id.dialogLastMessage).text = dialog.bodyLastMessage
+
                 val avatar = findViewById<ImageView>(R.id.dialogAvatar)
-                Picasso.get().load(qbDialog.photo).error(R.drawable.logo).into(avatar)
+                Picasso.get().load(dialog.photo).error(R.drawable.logo).into(avatar)
             }
         }
     }
