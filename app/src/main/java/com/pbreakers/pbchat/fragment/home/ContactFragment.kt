@@ -46,6 +46,9 @@ class ContactFragment : Fragment() {
     }
 
     private fun getAllContact() {
+
+        contactRefreshing.isRefreshing = true
+
         val database = FirebaseFirestore.getInstance()
         val userCollection = database.collection("users")
         userCollection.addSnapshotListener { querySnapshot, exception ->
@@ -58,6 +61,8 @@ class ContactFragment : Fragment() {
                 val user = it.toObject(FirebaseChatUser::class.java)
                 contactAdapter.add(UserItem(user))
             }
+
+            contactRefreshing.isRefreshing = false
         }
     }
 
